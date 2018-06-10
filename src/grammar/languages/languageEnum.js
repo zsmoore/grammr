@@ -1,9 +1,13 @@
-import { jsGrammar } from "./js/grammarEnum.js";
-import { unevenAB } from './simpleGrammar/grammarEnums.js'
+import { unevenAB } from './simpleGrammar/simpleGrammars'
+import {json, start} from './json/json.js';
 
 export const languages = {
-
-    Javascript      : jsGrammar,
+    
     UnevenAB        : unevenAB,
+    Json            : json,
 
 };
+
+export const startSymbols = {
+    Json            :start,
+}

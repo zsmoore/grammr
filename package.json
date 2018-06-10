@@ -28,6 +28,7 @@
     "babel-preset-es2015": "^6.24.1"
   },
   "dependencies": {
-    "lexr": "^1.0.0"
+    "grammr2json": "0.0.8",
+    "lexr": "^1.0.4"
   }
 }

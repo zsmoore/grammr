@@ -1,3 +1,5 @@
+import {parseBNF} from 'grammr2json';
+import {languages} from '../grammar/languages/languageEnum.js';
 
 class NonTerm {
 
@@ -62,10 +64,9 @@ class NonTerm {
 
 class GrammarTree {
 
-    constructor(grammar, startSymbol, terminals) {
+    constructor(grammar, startSymbol) {
         this.grammar = grammar;
         this.startSymbol = startSymbol;
-        this.terminals = terminals;
         this.nonTerminals = this.makeNodes();
         Object.values(this.nonTerminals).map(node => node.setTree(this));
     }
@@ -90,12 +91,50 @@ class GrammarTree {
     }
 
     hasTerm(terminal) {
-        return this.terminals.includes(terminal);
+        return !Object.keys(this.nonTerminals).includes(terminal);
     }
 }
 
 let start = 'S';
-let terminals = ['a', 'b'];
 let tokens = ['a'];
-let a = new GrammarTree(UNEVEN_AB, start, terminals);
-console.log(a.parseTokens(tokens));
+let a = new GrammarTree(languages.UnevenAB, start);
+//console.log(a.parseTokens(tokens));
+
+
+
+const testing = `<postalcode>           ::= <forwardsortationarea> <localdeliveryunit>
+
+<forwardsortationarea> ::= <provarea> <loctype> <letter>
+
+<localdeliveryunit>    ::= <digit> <letter> <digit>
+
+<provarea>             ::= A | B | C | E | G | H | J | K | L | M | N | 
+                           P | R | S | T | V | X | Y
+
+<loctype>              ::= <rural> | <urban>
+
+<rural>                ::= 0
+
+<urban>                ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+<letter>               ::= A | B | C | E | G | H | J | K | L | M | N | 
+                           P | R | S | T | V | W | X | Y | Z
+
+<digit>                ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9`;
+
+let start2 = 'postalcode';
+let input = `  K1N6N5
+M5W2E4
+X0A1A1`;
+
+input = input.trim().split('\n').map(line => line.trim().split(''));
+//console.log(input);
+//let transformedGram = parseBNF(testing, true);
+//let b = new GrammarTree(transformedGram, start2);
+//Object.values(b.nonTerminals).map(node => console.log(node.rules));
+//console.log(Object.keys(b.nonTerminals));
+//input = input.map(sentence => b.parseTokens(sentence));
+//input.map(console.log);
+
+
+module.exports = GrammarTree;
